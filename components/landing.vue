@@ -1,25 +1,26 @@
 <template>
     <div class="section">
       <section class="section">
-        <div class="columns is-mobile">
-          <div class="column is-half">
-              <h1 class="title" v-html="title"></h1>
+        <div class="columns">
+          <div class="column is-half is-vertical-center">
+              <h1 class="title" v-html="client.title"></h1>
           </div>
 
           <div class="column is-half">
-            <figure class="image is-350x150 is-pulled-right">
-              <img src="http://via.placeholder.com/350x100">
+            <figure class="image is-350x150 is-pulled-right" style="max-width: 220px">
+              <img :src="logoURL">
             </figure>
         </div>
         </div>
       </section>
       <section class="section">
-       <div class="columns is-mobile">
+       <div class="columns">
           <div class="column is-half">
-              <p class=content>
+            <p class=content>
               To join the session please fill out the information on the right and click ‘Join’.
               The email address and program ID must match the ones you received in your registration email.
             </p>
+
             <p class="content">
               When prompted please enter a direct dial phone number (does not work with extensions)
               and the system will call you for meeting audio. Note: Please see Biogen’s privacy policy
@@ -52,10 +53,10 @@
       </section>
       <section class="section">
         <div class="columns">
-          <div class="column"><a href="#">Privacy Policy</a></div>
-          <div class="column"><a href="#">Important Safety Information</a></div>
-          <div class="column"><a href="#">Prescribing Information</a></div>
-          <div class="column"><a href="#">Terms & Conditions</a></div>
+          <div class="column"><a :href="client.privacyPolicy" target="_blank">Privacy Policy</a></div>
+          <div class="column"><a :href="client.importantSafetyInformation" target="_blank">Important Safety Information</a></div>
+          <div class="column"><a :href="client.prescribingInformation" target="_blank">Prescribing Information</a></div>
+          <div class="column"><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></div>
         </div>
       </section>
 
@@ -67,7 +68,7 @@
             </p>
         </div>
         <div class="column">
-          <p class="is-pulled-right">SPZ-US-1315 4/18</p>
+          <p class="is-pulled-right">{{client.footerRightText}}</p>
         </div>
        </div>
       </footer>
@@ -77,7 +78,12 @@
 <script>
 export default {
   props: {
-    title: String,
+    client: Object,
+  },
+  computed: {
+    logoURL() {
+      return require('@/assets/' + this.client.logo);
+    },
   },
   data() {
     return {
@@ -99,6 +105,11 @@ a {
 }
 .footer {
   padding: 3rem;
+}
+
+.is-vertical-center {
+  display: flex;
+  align-items: center;
 }
 </style>
 
