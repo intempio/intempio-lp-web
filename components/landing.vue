@@ -1,5 +1,5 @@
 <template>
-    <div class="section">
+    <div>
       <section class="section">
         <div class="columns">
           <div class="column is-half is-vertical-center" style="padding-left:40px; padding-right: 40px">
