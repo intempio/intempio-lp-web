@@ -17,7 +17,7 @@
        <div class="columns">
           <div class="column is-half" style="padding-left:40px; padding-right: 40px">
             <p class=content>
-              To join the session please fill out the information on the right and click ‘Join’.
+              To join the session please fill out the information on the right and click 'Join'.
               The email address and program ID must match the ones you received in your registration email.
             </p>
 
