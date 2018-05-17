@@ -1,7 +1,7 @@
 export default {
   Biogen: {
     logo: 'bio.png',
-    title: 'Export on Demand',
+    title: 'Expert on Demand',
     footerRightText: 'FCH-US-3338 04/18',
     privacyPolicy: 'https://www.biogen.com/en_us/privacy-policy.html',
     termsOfUse: 'https://www.biogen.com/en_us/terms-and-conditions.html',
@@ -21,7 +21,7 @@ export default {
   },
   Tecfidera: {
     logo: 'bio.png',
-    title: 'Export on Demand',
+    title: 'Expert on Demand',
     footerRightText: '',
     privacyPolicy: 'https://www.biogen.com/en_us/privacy-policy.html',
     termsOfUse: 'https://www.biogen.com/en_us/terms-and-conditions.html',
