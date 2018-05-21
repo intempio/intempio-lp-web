@@ -38,15 +38,15 @@
             </div>
 
            <form v-on:submit.prevent="submitForm">
-              <b-field grouped>
+              <b-field grouped :type="nameType">
                   <b-input placeholder="First Name" expanded v-model="firstName"></b-input>
                   <b-input placeholder="Last Name" expanded v-model="lastName"></b-input>
               </b-field>
-              <b-field>
+              <b-field :type="emailType">
                   <b-input type="email" placeholder="Email Address" v-model="email">
                   </b-input>
               </b-field>
-              <b-field>
+              <b-field :type="programMeetingType">
                   <b-input placeholder="Program Meeting ID" type="number" v-model="programMeetingId"></b-input>
               </b-field>
 
@@ -102,11 +102,18 @@ export default {
       email: '',
       programMeetingId: '',
       isLoading: false,
+      nameType: '',
+      emailType: '',
+      programMeetingType: '',
     };
   },
   methods: {
     submitForm(e) {
       this.errors = [];
+      this.nameType = '';
+      this.emailType = '';
+      this.programMeetingType = '';
+
       if (
         this.firstName &&
         this.lastName &&
@@ -131,8 +138,6 @@ export default {
               programInfo,
             } = response.data;
 
-            console.log(response);
-
             const acLink = programInfo.acLink;
 
             if (!programFound)
@@ -155,13 +160,20 @@ export default {
           });
       }
 
-      if (!this.firstName || !this.lastName)
+      if (!this.firstName || !this.lastName) {
         this.errors.push('Please Enter Name');
+        this.nameType = 'is-danger';
+      }
 
-      if (!this.email) this.errors.push('Please Enter Email Address');
+      if (!this.email) {
+        this.errors.push('Please Enter Email Address');
+        this.emailType = 'is-danger';
+      }
 
-      if (!this.programMeetingId)
+      if (!this.programMeetingId) {
         this.errors.push('Please Enter Program Meeting ID');
+        this.programMeetingType = 'is-danger';
+      }
     },
     redirectToAC(acLink) {
       window.open(
@@ -183,7 +195,6 @@ a {
 }
 .footer {
   padding: 3rem;
-  background-color: #bfe2fe !important;
 }
 
 .is-vertical-center {
@@ -224,6 +235,10 @@ button.submit,
   color: #000;
   font-size: 18px;
 }
+
+button.submit:hover {
+  background-color: #bfe2fe !important;
+}
 .tos a {
   font-size: 14px;
 }
@@ -235,6 +250,10 @@ button.submit,
   color: red;
   font-weight: bold;
   font-size: 14px;
+}
+.button:focus:not(:active),
+.button.is-focused:not(:active) {
+  box-shadow: none;
 }
 </style>
 
