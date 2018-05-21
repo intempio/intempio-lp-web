@@ -2,7 +2,7 @@ const pkg = require('./package');
 
 module.exports = {
   mode: 'spa',
-
+  loadingIndicator: 'pulse',
   /*
   ** Headers of the page
   */

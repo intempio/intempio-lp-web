@@ -32,22 +32,28 @@
             </p>
           </div>
           <div class="column is-half" style="padding-left:40px; padding-right: 40px">
-            <b-field grouped>
-                  <b-input placeholder="First Name" expanded></b-input>
-                  <b-input placeholder="Last Name" expanded></b-input>
-            </b-field>
-            <b-field>
-                <b-input type="email" placeholder="Email Address"
-                    value="john@">
-                </b-input>
-            </b-field>
-            <b-field>
-                <b-input placeholder="Program Meeting ID" type="number"></b-input>
-            </b-field>
 
-            <br />
+            <div class="content">
+              <div class="error-message" v-for="(error, index) in errors" :key="index">{{error}}</div>
+            </div>
 
-            <button class="button is-fullwidth is-rounded is-outlined submit" type="submit">Join</button>
+           <form v-on:submit.prevent="submitForm">
+              <b-field grouped>
+                  <b-input placeholder="First Name" expanded v-model="firstName"></b-input>
+                  <b-input placeholder="Last Name" expanded v-model="lastName"></b-input>
+              </b-field>
+              <b-field>
+                  <b-input type="email" placeholder="Email Address" v-model="email">
+                  </b-input>
+              </b-field>
+              <b-field>
+                  <b-input placeholder="Program Meeting ID" type="number" v-model="programMeetingId"></b-input>
+              </b-field>
+
+              <br />
+
+              <button class="button is-fullwidth is-rounded is-outlined submit" type="submit">Join</button>
+           </form>
           </div>
        </div>
       </section>
@@ -72,6 +78,7 @@
         </div>
        </div>
       </footer>
+      <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
     </div>
 </template>
 
@@ -89,13 +96,78 @@ export default {
   },
   data() {
     return {
-      formData: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        programMeetingId: '',
-      },
+      errors: [],
+      firstName: '',
+      lastName: '',
+      email: '',
+      programMeetingId: '',
+      isLoading: false,
     };
+  },
+  methods: {
+    submitForm(e) {
+      this.errors = [];
+      if (
+        this.firstName &&
+        this.lastName &&
+        this.programMeetingId &&
+        this.email
+      ) {
+        const formData = {
+          et_pb_contact_first_name2_1: this.firstName,
+          et_pb_contact_last_name2_1: this.lastName,
+          et_pb_contact_email2_1: this.email,
+          et_pb_contact_program_id2_1: this.programMeetingId,
+        };
+        this.isLoading = true;
+        this.$axios
+          .post('https://runflow.built.io/run/1DGm8LpMUw?sync=true', formData)
+          .then(response => {
+            this.isLoading = false;
+            const {
+              programInfoFound,
+              programFound,
+              programUserFound,
+              programInfo,
+            } = response.data;
+
+            console.log(response);
+
+            const acLink = programInfo.acLink;
+
+            if (!programFound)
+              this.errors.push(
+                'Incorrect Program ID, please check your email notification and try again.'
+              );
+            else {
+              if (this.email.contains('@biogen.com')) {
+                this.redirectToAC(acLink);
+              } else {
+                if (!programUserFound) {
+                  this.errors.push(
+                    'This email address is not registered for this event.  The email address must be entered exactly as it was upon registration.'
+                  );
+                } else {
+                  this.redirectToAC(acLink);
+                }
+              }
+            }
+          });
+      }
+
+      if (!this.firstName || !this.lastName)
+        this.errors.push('Please Enter Name');
+
+      if (!this.email) this.errors.push('Please Enter Email Address');
+
+      if (!this.programMeetingId)
+        this.errors.push('Please Enter Program Meeting ID');
+    },
+    redirectToAC(acLink) {
+      window.open(
+        `${acLink}?guestName=${this.firstName} ${this.lastName},_blank`
+      );
+    },
   },
 };
 </script>
@@ -158,6 +230,11 @@ button.submit,
 .title {
   font-size: 42px;
   font-weight: 400;
+}
+.error-message {
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
 }
 </style>
 
