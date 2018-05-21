@@ -82,7 +82,9 @@ export default {
   },
   computed: {
     logoURL() {
-      return require('@/assets/' + this.client.logo);
+      return this.client.logo === ''
+        ? ''
+        : require('@/assets/' + this.client.logo);
     },
   },
   data() {

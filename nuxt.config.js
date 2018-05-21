@@ -38,7 +38,8 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     // Doc: https://buefy.github.io/#/documentation
-    'nuxt-buefy',
+    // Simple usage
+    ['nuxt-buefy', { materialDesignIcons: false }],
   ],
   /*
   ** Axios module configuration
