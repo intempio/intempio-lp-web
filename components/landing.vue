@@ -140,11 +140,12 @@ export default {
 
             const acLink = programInfo.acLink;
 
-            if (!programFound)
+            if (!programFound) {
               this.errors.push(
                 'Incorrect Program ID, please check your email notification and try again.'
               );
-            else {
+              this.programMeetingType = 'is-danger';
+            } else {
               if (this.email.contains('@biogen.com')) {
                 this.redirectToAC(acLink);
               } else {
@@ -152,6 +153,7 @@ export default {
                   this.errors.push(
                     'This email address is not registered for this event.  The email address must be entered exactly as it was upon registration.'
                   );
+                  this.emailType = 'is-danger';
                 } else {
                   this.redirectToAC(acLink);
                 }
