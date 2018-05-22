@@ -153,14 +153,14 @@ export default {
           formData = {
             et_pb_contact_first_name_1: this.firstName,
             et_pb_contact_last_name_1: this.lastName,
-            et_pb_contact_email_1: this.email,
+            et_pb_contact_email_1: this.email.toLowerCase(),
             et_pb_contact_program_id_1: this.programMeetingId.toString(),
           };
         } else {
           formData = {
             et_pb_contact_first_name2_1: this.firstName,
             et_pb_contact_last_name2_1: this.lastName,
-            et_pb_contact_email2_1: this.email,
+            et_pb_contact_email2_1: this.email.toLowerCase(),
             et_pb_contact_program_id2_1: this.programMeetingId.toString(),
           };
         }
