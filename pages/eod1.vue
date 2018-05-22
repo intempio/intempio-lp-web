@@ -1,9 +1,8 @@
 <template>
-      <LandingPageComponent :client="client"/>
+      <LandingPageComponent :onFormSubmitUrl="onFormSubmitUrl" :pagetypeInfo="pagetypeInfo"/>
 </template>
 
 <script>
-import CLIENTS from '@/utils/clients';
 import LandingPageComponent from '@/components/landing';
 
 export default {
@@ -13,24 +12,11 @@ export default {
       'https://runflow.built.io/run/27mqbwl0xi?sync=true',
       { pageUrl: 'eod1' }
     );
-    return { response };
-  },
-  created() {
-    const { brand, page, title, acLink } = this.response.pagetypeInfo;
-    window.history.replaceState({}, document.title, `/${brand}/${page}`);
-    this.client = CLIENTS[brand];
+    return { pagetypeInfo: response.pagetypeInfo };
   },
   data() {
     return {
-      client: {
-        logo: '',
-        title: '',
-        footerRighText: '',
-        privacyPolicy: '',
-        termsOfUse: '',
-        importantSafetyInformation: '',
-        prescribingInformation: '',
-      },
+      onFormSubmitUrl: 'https://runflow.built.io/run/1DGm8LpMUw?sync=true',
     };
   },
 };

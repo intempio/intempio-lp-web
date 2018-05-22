@@ -83,12 +83,17 @@
 </template>
 
 <script>
+import CLIENTS from '@/utils/clients';
+
 export default {
   props: {
-    client: Object,
+    onFormSubmitUrl: String,
+    pagetypeInfo: Object,
   },
-  mounted() {
-    throw new Error('test error');
+  created() {
+    const { brand, page, title, acLink } = this.pagetypeInfo;
+    window.history.replaceState({}, document.title, `/${brand}/${page}`);
+    this.client = CLIENTS[brand];
   },
   computed: {
     logoURL() {
@@ -108,6 +113,15 @@ export default {
       nameType: '',
       emailType: '',
       programMeetingType: '',
+      client: {
+        logo: '',
+        title: '',
+        footerRighText: '',
+        privacyPolicy: '',
+        termsOfUse: '',
+        importantSafetyInformation: '',
+        prescribingInformation: '',
+      },
     };
   },
   methods: {
@@ -124,45 +138,43 @@ export default {
         this.email
       ) {
         const formData = {
-          et_pb_contact_first_name2_1: this.firstName,
-          et_pb_contact_last_name2_1: this.lastName,
-          et_pb_contact_email2_1: this.email,
-          et_pb_contact_program_id2_1: this.programMeetingId,
+          et_pb_contact_first_name_1: this.firstName,
+          et_pb_contact_last_name_1: this.lastName,
+          et_pb_contact_email_1: this.email,
+          et_pb_contact_program_id_1: this.programMeetingId.toString(),
         };
         this.isLoading = true;
-        this.$axios
-          .post('https://runflow.built.io/run/1DGm8LpMUw?sync=true', formData)
-          .then(response => {
-            this.isLoading = false;
-            const {
-              programInfoFound,
-              programFound,
-              programUserFound,
-              programInfo,
-            } = response.data;
+        this.$axios.post(this.onFormSubmitUrl, formData).then(response => {
+          this.isLoading = false;
+          const {
+            programInfoFound,
+            programFound,
+            programUserFound,
+            programInfo,
+          } = response.data;
 
+          if (!programFound) {
+            this.errors.push(
+              'Incorrect Program ID, please check your email notification and try again.'
+            );
+            this.programMeetingType = 'is-danger';
+          } else {
             const acLink = programInfo.acLink;
 
-            if (!programFound) {
-              this.errors.push(
-                'Incorrect Program ID, please check your email notification and try again.'
-              );
-              this.programMeetingType = 'is-danger';
+            if (this.email.includes('@biogen.com')) {
+              this.redirectToAC(acLink);
             } else {
-              if (this.email.contains('@biogen.com')) {
-                this.redirectToAC(acLink);
+              if (!programUserFound) {
+                this.errors.push(
+                  'This email address is not registered for this event.  The email address must be entered exactly as it was upon registration.'
+                );
+                this.emailType = 'is-danger';
               } else {
-                if (!programUserFound) {
-                  this.errors.push(
-                    'This email address is not registered for this event.  The email address must be entered exactly as it was upon registration.'
-                  );
-                  this.emailType = 'is-danger';
-                } else {
-                  this.redirectToAC(acLink);
-                }
+                this.redirectToAC(acLink);
               }
             }
-          });
+          }
+        });
       }
 
       if (!this.firstName || !this.lastName) {
@@ -181,9 +193,9 @@ export default {
       }
     },
     redirectToAC(acLink) {
-      window.open(
-        `${acLink}?guestName=${this.firstName} ${this.lastName},_blank`
-      );
+      window.location.href = `${acLink}?guestName=${this.firstName} ${
+        this.lastName
+      }`;
     },
   },
 };

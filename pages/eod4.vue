@@ -10,7 +10,7 @@ export default {
   async asyncData({ app }) {
     const response = await app.$axios.$post(
       'https://runflow.built.io/run/27mqbwl0xi?sync=true',
-      { pageUrl: 'eod3' }
+      { pageUrl: 'eod4' }
     );
     return { pagetypeInfo: response.pagetypeInfo };
   },
