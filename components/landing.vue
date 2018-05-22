@@ -60,17 +60,18 @@
       <section class="section tos">
         <div class="columns">
           <div class="column has-text-centered">
-            <strong><a :href="client.privacyPolicy" target="_blank">Privacy Policy</a></strong>
+            <strong v-if="client.privacyPolicy"><a :href="client.privacyPolicy" target="_blank">Privacy Policy</a></strong>
           </div>
           <div class="column has-text-centered">
-            <strong><a :href="client.importantSafetyInformation" target="_blank">Important Safety Information</a></strong>
+            <strong v-if="client.termsOfUse"><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></strong>
           </div>
           <div class="column has-text-centered">
-            <strong><a :href="client.prescribingInformation" target="_blank">Prescribing Information</a></strong>
+            <strong v-if="client.importantSafetyInformation"><a :href="client.importantSafetyInformation" target="_blank">Important Safety Information</a></strong>
           </div>
           <div class="column has-text-centered">
-            <strong><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></strong>
+            <strong v-if="client.prescribingInformation"><a :href="client.prescribingInformation" target="_blank">Prescribing Information</a></strong>
           </div>
+
         </div>
       </section>
 
@@ -100,9 +101,10 @@ export default {
     pageUrl: String,
   },
   created() {
-    const { brand, page, title, acLink } = this.pagetypeInfo;
+    const { brand, page, acLink, title } = this.pagetypeInfo;
     window.history.replaceState({}, document.title, `/${brand}/${page}`);
     this.client = CLIENTS[brand];
+    this.client.title = title;
   },
   computed: {
     logoURL() {

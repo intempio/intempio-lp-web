@@ -3,6 +3,9 @@ const pkg = require('./package');
 module.exports = {
   mode: 'spa',
   loadingIndicator: 'pulse',
+  generate: {
+    routes: ['404'],
+  },
   /*
   ** Headers of the page
   */

@@ -12,16 +12,17 @@ import LandingPageComponent from '@/components/landing';
 export default {
   components: { LandingPageComponent },
   async asyncData({ app }) {
+    const cur_pageUrl = window.location.pathname.replace(/\//g, '');
     const response = await app.$axios.$post(
       'https://runflow.built.io/run/2DK1vAkadY?sync=true',
-      { pageUrl: 'webcast1' }
+      { pageUrl: cur_pageUrl }
     );
     return { pagetypeInfo: response.pagetypeInfo };
   },
   data() {
     return {
       onFormSubmitUrl: 'https://runflow.built.io/run/2RfHUEtCcg?sync=true',
-      pageUrl: 'webcast1',
+      url: 'webcast1',
     };
   },
   head() {
