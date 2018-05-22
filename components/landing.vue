@@ -59,10 +59,18 @@
       </section>
       <section class="section tos">
         <div class="columns">
-          <div class="column has-text-centered"><strong><a :href="client.privacyPolicy" target="_blank">Privacy Policy</a></strong></div>
-          <div class="column has-text-centered"><strong><a :href="client.importantSafetyInformation" target="_blank">Important Safety Information</a></strong></div>
-          <div class="column has-text-centered"><strong><a :href="client.prescribingInformation" target="_blank">Prescribing Information</a></strong></div>
-          <div class="column has-text-centered"><strong><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></strong></div>
+          <div class="column has-text-centered">
+            <strong><a :href="client.privacyPolicy" target="_blank">Privacy Policy</a></strong>
+          </div>
+          <div class="column has-text-centered">
+            <strong><a :href="client.importantSafetyInformation" target="_blank">Important Safety Information</a></strong>
+          </div>
+          <div class="column has-text-centered">
+            <strong><a :href="client.prescribingInformation" target="_blank">Prescribing Information</a></strong>
+          </div>
+          <div class="column has-text-centered">
+            <strong><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></strong>
+          </div>
         </div>
       </section>
 
@@ -89,6 +97,7 @@ export default {
   props: {
     onFormSubmitUrl: String,
     pagetypeInfo: Object,
+    pageUrl: String,
   },
   created() {
     const { brand, page, title, acLink } = this.pagetypeInfo;
@@ -137,12 +146,22 @@ export default {
         this.programMeetingId &&
         this.email
       ) {
-        const formData = {
-          et_pb_contact_first_name_1: this.firstName,
-          et_pb_contact_last_name_1: this.lastName,
-          et_pb_contact_email_1: this.email,
-          et_pb_contact_program_id_1: this.programMeetingId.toString(),
-        };
+        let formData = {};
+        if (this.pageUrl.includes('eod')) {
+          formData = {
+            et_pb_contact_first_name_1: this.firstName,
+            et_pb_contact_last_name_1: this.lastName,
+            et_pb_contact_email_1: this.email,
+            et_pb_contact_program_id_1: this.programMeetingId.toString(),
+          };
+        } else {
+          formData = {
+            et_pb_contact_first_name2_1: this.firstName,
+            et_pb_contact_last_name2_1: this.lastName,
+            et_pb_contact_email2_1: this.email,
+            et_pb_contact_program_id2_1: this.programMeetingId.toString(),
+          };
+        }
         this.isLoading = true;
         this.$axios.post(this.onFormSubmitUrl, formData).then(response => {
           this.isLoading = false;

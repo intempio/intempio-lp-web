@@ -1,5 +1,9 @@
 <template>
-      <LandingPageComponent :onFormSubmitUrl="onFormSubmitUrl" :pagetypeInfo="pagetypeInfo"/>
+      <LandingPageComponent
+        :onFormSubmitUrl="onFormSubmitUrl"
+        :pagetypeInfo="pagetypeInfo"
+        :pageUrl="url"
+      />
 </template>
 
 <script>
@@ -17,6 +21,7 @@ export default {
   data() {
     return {
       onFormSubmitUrl: 'https://runflow.built.io/run/2RfHUEtCcg?sync=true',
+      url: 'webcast2',
     };
   },
   head() {
