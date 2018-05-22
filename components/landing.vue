@@ -87,6 +87,9 @@ export default {
   props: {
     client: Object,
   },
+  mounted() {
+    throw new Error('test error');
+  },
   computed: {
     logoURL() {
       return this.client.logo === ''

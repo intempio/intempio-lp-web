@@ -1,0 +1,14 @@
+
+# Global settings applied to the whole site.
+[build]
+publish = "dist"
+command = "npm run generate"
+
+[context.production]
+  [context.production.environment]
+    SENTRY_PUBLIC_KEY = "https://649d3220a99a471f9d96ea7587890ec1@sentry.io/1211054"
+
+[context.branch-deploy]
+  [context.branch-deploy.environment]
+    SENTRY_PUBLIC_KEY = ""
+

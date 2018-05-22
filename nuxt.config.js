@@ -40,7 +40,11 @@ module.exports = {
     // Doc: https://buefy.github.io/#/documentation
     // Simple usage
     ['nuxt-buefy', { materialDesignIcons: false }],
+    '@nuxtjs/sentry',
   ],
+  sentry: {
+    dsn: process.env.SENTRY_PUBLIC_KEY,
+  },
   /*
   ** Axios module configuration
   */
