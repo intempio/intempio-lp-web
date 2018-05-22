@@ -19,5 +19,10 @@ export default {
       onFormSubmitUrl: 'https://runflow.built.io/run/1DGm8LpMUw?sync=true',
     };
   },
+  head() {
+    return {
+      title: 'EOD | Intempio',
+    };
+  },
 };
 </script>

@@ -10,13 +10,18 @@ export default {
   async asyncData({ app }) {
     const response = await app.$axios.$post(
       'https://runflow.built.io/run/27mqbwl0xi?sync=true',
-      { pageUrl: 'eod5' }
+      { pageUrl: 'eod3' }
     );
     return { pagetypeInfo: response.pagetypeInfo };
   },
   data() {
     return {
       onFormSubmitUrl: 'https://runflow.built.io/run/1DGm8LpMUw?sync=true',
+    };
+  },
+  head() {
+    return {
+      title: 'EOD | Intempio',
     };
   },
 };

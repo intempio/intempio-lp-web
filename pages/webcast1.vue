@@ -19,5 +19,10 @@ export default {
       onFormSubmitUrl: 'https://runflow.built.io/run/2RfHUEtCcg?sync=true',
     };
   },
+  head() {
+    return {
+      title: 'Webcast | Intempio',
+    };
+  },
 };
 </script>
