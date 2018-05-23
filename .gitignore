@@ -12,3 +12,4 @@ dist
 
 #Cypress
 cypress
+cypress.json
