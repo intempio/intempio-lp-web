@@ -28,6 +28,7 @@ export default {
   head() {
     return {
       title: 'EOD | Intempio',
+      bodyAttrs: { class: 'sma-eod' },
     };
   },
 };
