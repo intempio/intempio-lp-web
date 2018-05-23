@@ -20,7 +20,6 @@ module.exports = {
       {
         src:
           '//www.socialintents.com/api/socialintents.1.3.js#2c9fa563613f226f016142ba9b42018a',
-        async: 'async',
       },
     ],
   },
