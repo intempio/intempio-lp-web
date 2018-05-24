@@ -43,11 +43,11 @@
                   <b-input placeholder="Last Name" expanded v-model="lastName"></b-input>
               </b-field>
               <b-field :type="emailType">
-                  <b-input type="email" placeholder="Email Address" v-model="email">
+                  <b-input type="email" placeholder="Email Address" v-model="email" v-bind:class="{ 'error-input': this.emailType == 'is-danger' }">
                   </b-input>
               </b-field>
               <b-field :type="programMeetingType">
-                  <b-input placeholder="Program Meeting ID" type="number" v-model="programMeetingId"></b-input>
+                  <b-input placeholder="Program ID" type="number" v-model="programMeetingId"></b-input>
               </b-field>
 
               <br />
@@ -58,13 +58,11 @@
        </div>
       </section>
       <section class="section tos">
-        <div class="columns">
+        <div class="columns" v-if="this.brand !== 'Biogen'">
           <div class="column has-text-centered">
             <strong v-if="client.privacyPolicy"><a :href="client.privacyPolicy" target="_blank">Privacy Policy</a></strong>
           </div>
-          <div class="column has-text-centered">
-            <strong v-if="client.termsOfUse"><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></strong>
-          </div>
+
           <div class="column has-text-centered">
             <strong v-if="client.importantSafetyInformation"><a :href="client.importantSafetyInformation" target="_blank">Important Safety Information</a></strong>
           </div>
@@ -72,10 +70,23 @@
             <strong v-if="client.prescribingInformation"><a :href="client.prescribingInformation" target="_blank">Prescribing Information</a></strong>
           </div>
 
+          <div class="column has-text-centered">
+            <strong v-if="client.termsOfUse"><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></strong>
+          </div>
+        </div>
+
+        <div class="columns" v-else>
+          <div class="column has-text-centered">
+            <strong v-if="client.privacyPolicy"><a :href="client.privacyPolicy" target="_blank">Privacy Policy</a></strong>
+          </div>
+
+          <div class="column has-text-centered">
+            <strong v-if="client.termsOfUse"><a :href="client.termsOfUse" target="_blank">Terms & Conditions</a></strong>
+          </div>
         </div>
       </section>
 
-      <footer class="footer">
+      <footer class="footer" style="background: #bfe2fe">
        <div class="columns">
         <div class="column">
           <p>
@@ -88,6 +99,8 @@
        </div>
       </footer>
       <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
+
+      <div id="chat-text1"></div>
     </div>
 </template>
 
@@ -105,6 +118,7 @@ export default {
     window.history.replaceState({}, document.title, `/${brand}/${page}`);
     this.client = CLIENTS[brand];
     this.client.title = title;
+    this.brand = brand;
   },
   computed: {
     logoURL() {
@@ -124,6 +138,7 @@ export default {
       nameType: '',
       emailType: '',
       programMeetingType: '',
+      brand: '',
       client: {
         logo: '',
         title: '',
@@ -133,6 +148,14 @@ export default {
         importantSafetyInformation: '',
         prescribingInformation: '',
       },
+    };
+  },
+  head() {
+    return {
+      title: `${
+        this.pageUrl.indexOf('eod') !== -1 ? 'EOD' : 'Webcast'
+      } | Intempio`,
+      bodyAttrs: { class: `${this.brand === 'Biogen' ? 'ms-eod' : 'sma-eod'}` },
     };
   },
   methods: {
@@ -149,7 +172,7 @@ export default {
         this.email
       ) {
         let formData = {};
-        if (this.pageUrl.includes('eod')) {
+        if (this.pageUrl.indexOf('eod') !== -1) {
           formData = {
             et_pb_contact_first_name_1: this.firstName,
             et_pb_contact_last_name_1: this.lastName,
@@ -182,7 +205,7 @@ export default {
           } else {
             const acLink = programInfo.acLink;
 
-            if (this.email.includes('@biogen.com')) {
+            if (this.email.indexOf('@biogen.com') !== -1) {
               this.redirectToAC(acLink);
             } else {
               if (!programUserFound) {
@@ -201,15 +224,11 @@ export default {
       if (!this.firstName || !this.lastName) {
         this.errors.push('Please Enter Name');
         this.nameType = 'is-danger';
-      }
-
-      if (!this.email) {
+      } else if (!this.email) {
         this.errors.push('Please Enter Email Address');
         this.emailType = 'is-danger';
-      }
-
-      if (!this.programMeetingId) {
-        this.errors.push('Please Enter Program Meeting ID');
+      } else if (!this.programMeetingId) {
+        this.errors.push('Please Enter Program ID');
         this.programMeetingType = 'is-danger';
       }
     },
@@ -292,6 +311,47 @@ button.submit:hover {
 .button:focus:not(:active),
 .button.is-focused:not(:active) {
   box-shadow: none;
+}
+
+.siScale.siInvite {
+  height: 220px !important;
+  min-height: 220px !important;
+  bottom: 30px !important;
+}
+body.sma-eod .silc-btn-button {
+  background-image: url('http://intemp.io/wp-content/uploads/2018/04/wrench_icon.png') !important;
+}
+
+body.sma-eod .icon-text {
+  visibility: visible;
+  display: inline-block;
+}
+.icon-text {
+  visibility: hidden;
+  display: none;
+}
+body.sma-eod #chat-text1:before {
+  display: block;
+  content: 'Technical Difficulties?';
+  width: 110px;
+  text-align: center;
+}
+body.ms-eod #chat-text1:before {
+  display: block;
+  content: 'Need Help?';
+}
+#chat-text1 {
+  position: fixed;
+  right: 12px;
+  bottom: 82px;
+  color: rgb(0, 174, 239);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+
+.error-input input {
+  background: #fbd4d4;
 }
 </style>
 
