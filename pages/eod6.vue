@@ -25,11 +25,5 @@ export default {
       url: 'eod6',
     };
   },
-  head() {
-    return {
-      title: 'EOD | Intempio',
-      bodyAttrs: { class: 'sma-eod' },
-    };
-  },
 };
 </script>

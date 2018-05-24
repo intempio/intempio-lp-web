@@ -25,10 +25,5 @@ export default {
       url: 'webcast2',
     };
   },
-  head() {
-    return {
-      title: 'Webcast | Intempio',
-    };
-  },
 };
 </script>
