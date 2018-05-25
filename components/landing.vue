@@ -116,9 +116,12 @@ export default {
   created() {
     const { brand, page, acLink, title } = this.pagetypeInfo;
     window.history.replaceState({}, document.title, `/${brand}/${page}`);
-    this.client = CLIENTS[brand];
-    this.client.title = title;
     this.brand = brand;
+    if (brand === 'Spinraza') {
+      this.client = CLIENTS[brand];
+    } else {
+      this.client.title = title;
+    }
   },
   computed: {
     logoURL() {
