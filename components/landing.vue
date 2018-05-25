@@ -117,8 +117,10 @@ export default {
     const { brand, page, acLink, title } = this.pagetypeInfo;
     window.history.replaceState({}, document.title, `/${brand}/${page}`);
     this.brand = brand;
+    this.client = CLIENTS[brand];
+
     if (brand === 'Spinraza') {
-      this.client = CLIENTS[brand];
+      this.client.title = CLIENTS[brand].title;
     } else {
       this.client.title = title;
     }
