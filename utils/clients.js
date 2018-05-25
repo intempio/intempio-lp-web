@@ -10,7 +10,8 @@ export default {
   },
   Spinraza: {
     logo: 'spr.png',
-    title: 'SPINRAZA® (nusinersen)   Expert on Demand',
+    title:
+      'SPINRAZA® <span style="font-size: 30px">(nusinersen)</span> <br>   Expert on Demand',
     footerRightText: 'SPZ-US-1315 4/18',
     privacyPolicy: 'https://www.biogen.com/en_us/privacy-policy.html',
     termsOfUse: 'https://www.biogen.com/en_us/terms-and-conditions.html',
