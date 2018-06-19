@@ -1,9 +1,5 @@
 <template>
-      <LandingPageComponent
-        :onFormSubmitUrl="onFormSubmitUrl"
-        :pagetypeInfo="pagetypeInfo"
-        :pageUrl="url"
-      />
+  <LandingPageComponent :onFormSubmitUrl="onFormSubmitUrl" :pagetypeInfo="pagetypeInfo" :pageUrl="url" />
 </template>
 
 <script>
