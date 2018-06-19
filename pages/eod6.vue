@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      onFormSubmitUrl: 'https://runflow.built.io/run/1DGm8LpMUw?sync=true',
+      onFormSubmitUrl: 'https://runflow.built.io/run/lWByRJxwM?sync=true',
       url: 'eod6',
     };
   },
