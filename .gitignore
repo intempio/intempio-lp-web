@@ -13,3 +13,6 @@ dist
 #Cypress
 cypress
 cypress.json
+.idea/
+package-lock.json
+node_modules/
